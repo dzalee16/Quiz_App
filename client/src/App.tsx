@@ -3,6 +3,7 @@ import QuestionsCard from "./components/QuestionsCard";
 import { handleFetchQuestions, Difficulty, QuestionExtend } from "./API/index";
 import { GlobalStyle } from "./styled";
 import { formatTime } from "./utilities/utils";
+import { getUsers, createUser } from "./services/db";
 
 //global variable
 const TOTAL_QUESTIONS = 10;
@@ -34,6 +35,7 @@ const App = () => {
   );
   const [time, setTime] = useState<Time>(Time.EASY);
   const [timerId, setTimerId] = useState<any>(null);
+  const [username, setUsername] = useState("");
 
   useEffect(() => {
     console.log(questions);
@@ -43,9 +45,35 @@ const App = () => {
     console.log(userAnswer);
   }, [userAnswer]);
 
+  // useEffect(() => {
+  //   console.log(time);
+  // }, [time]);
+
   useEffect(() => {
-    console.log(time);
-  }, [time]);
+    console.log(username);
+  }, [username]);
+
+  // useEffect(() => {
+  //   getUsers()
+  //     .then((res) => {
+  //       console.log(res);
+  //     })
+  //     .catch((err) => console.log(err));
+  // }, []);
+
+  // useEffect(() => {
+  //   const data = {
+  //     username: "Jovic",
+  //     score: 3,
+  //     time: 2,
+  //     difficulty: Difficulty.EASY,
+  //   };
+  //   createUser(data)
+  //     .then((res) => {
+  //       console.log(res);
+  //     })
+  //     .catch((err) => console.log(err));
+  // }, []);
 
   // Handle start game
   const handleStartGame = async () => {
@@ -127,6 +155,10 @@ const App = () => {
     }
   }, [time, userAnswer]);
 
+  const handleUsername = (e: React.FocusEvent<HTMLInputElement>) => {
+    setUsername(e.currentTarget.value);
+  };
+
   return (
     <React.Fragment>
       <GlobalStyle />
@@ -142,16 +174,26 @@ const App = () => {
             ) : null}
 
             {isGameOver && !isLoading ? (
-              <div className="difficulty">
-                <select onClick={handleChooseDifficulty}>
-                  <option>Easy</option>
-                  <option>Medium</option>
-                  <option>Hard</option>
-                </select>
-              </div>
+              <>
+                <div className="difficulty">
+                  <select onClick={handleChooseDifficulty}>
+                    <option>Easy</option>
+                    <option>Medium</option>
+                    <option>Hard</option>
+                  </select>
+                </div>
+                <div className="username">
+                  <input
+                    type="text"
+                    placeholder="Enter your name..."
+                    onChange={handleUsername}
+                  />
+                </div>
+              </>
             ) : (
               !isLoading && (
                 <>
+                  <div className="showUsername">Username: {username}</div>
                   <div className="show-difficulty">
                     Difficulty: {chooseDifficulty.toUpperCase()}
                   </div>
