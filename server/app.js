@@ -10,7 +10,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
 
 const usersRoutes = require("./routes/users");
-const PORT = 5000;
+const PORT = 8080;
 
 //access to the middlewares
 app.use("/users", usersRoutes);
