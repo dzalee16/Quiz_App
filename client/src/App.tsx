@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import QuestionsCard from "./components/QuestionsCard";
+import TableOfResults from "./components/TableOfResults/index.";
 import { handleFetchQuestions, Difficulty, QuestionExtend } from "./API/index";
 import { GlobalStyle } from "./styled";
 import { formatTime } from "./utilities/utils";
@@ -19,8 +20,6 @@ export type Answer = {
   correct: boolean;
   correctAnswer: string;
   answer: string;
-  score: number;
-  time: number;
 };
 
 const App = () => {
@@ -36,30 +35,35 @@ const App = () => {
   const [time, setTime] = useState<Time>(Time.EASY);
   const [timerId, setTimerId] = useState<any>(null);
   const [username, setUsername] = useState("");
+  const [errMsg, setErrMsg] = useState("");
 
   useEffect(() => {
-    console.log(questions);
-  }, [questions]);
+    console.log(questionNumber);
+  }, [questionNumber]);
 
   useEffect(() => {
-    console.log(userAnswer);
-  }, [userAnswer]);
+    console.log(userAnswer.length);
+  }, [userAnswer.length]);
 
   // useEffect(() => {
   //   console.log(time);
   // }, [time]);
 
-  useEffect(() => {
-    console.log(username);
-  }, [username]);
+  // useEffect(() => {
+  //   console.log(username);
+  // }, [username]);
 
   // useEffect(() => {
-  //   getUsers()
-  //     .then((res) => {
-  //       console.log(res);
-  //     })
-  //     .catch((err) => console.log(err));
-  // }, []);
+  //   console.log(user);
+  // }, [user]);
+
+  useEffect(() => {
+    getUsers()
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
   // useEffect(() => {
   //   const data = {
@@ -77,22 +81,26 @@ const App = () => {
 
   // Handle start game
   const handleStartGame = async () => {
-    try {
-      setIsLoading(true);
-      setIsGameOver(false);
-      const newQuestions = await handleFetchQuestions(
-        TOTAL_QUESTIONS,
-        chooseDifficulty
-      );
-      setQuestions(newQuestions);
-      setTimer();
-    } catch (err) {
-      console.log("Error has occured while fetching data", err);
+    if (username !== "" && username !== null) {
+      try {
+        setIsLoading(true);
+        setIsGameOver(false);
+        const newQuestions = await handleFetchQuestions(
+          TOTAL_QUESTIONS,
+          chooseDifficulty
+        );
+        setQuestions(newQuestions);
+        setTimer();
+      } catch (err) {
+        console.log("Error has occured while fetching data", err);
+      }
+      setScore(0);
+      setQuestionNumber(0);
+      setUserAnswer([]);
+      setIsLoading(false);
+    } else {
+      setErrMsg("You must enter your name");
     }
-    setScore(0);
-    setQuestionNumber(0);
-    setUserAnswer([]);
-    setIsLoading(false);
   };
 
   //Checking if answer is correct
@@ -108,8 +116,6 @@ const App = () => {
         answer,
         correct,
         correctAnswer: questions[questionNumber].correct_answer,
-        score,
-        time,
       };
       setUserAnswer((prevState) => [...prevState, newAnswer]);
     }
@@ -159,6 +165,19 @@ const App = () => {
     setUsername(e.currentTarget.value);
   };
 
+  const handleEndGame = () => {
+    const data = {
+      username,
+      score,
+      time,
+      difficulty: chooseDifficulty,
+    };
+    createUser(data)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+    setIsGameOver(true);
+  };
+
   return (
     <React.Fragment>
       <GlobalStyle />
@@ -189,6 +208,8 @@ const App = () => {
                     onChange={handleUsername}
                   />
                 </div>
+                <p className="errMsg">{errMsg}</p>
+                <TableOfResults />
               </>
             ) : (
               !isLoading && (
@@ -229,10 +250,14 @@ const App = () => {
             {!isGameOver &&
             !isLoading &&
             userAnswer.length === questionNumber + 1 &&
-            questionNumber !== TOTAL_QUESTIONS ? (
+            userAnswer.length !== TOTAL_QUESTIONS ? (
               <button className="next-btn" onClick={handleNextQuestion}>
                 Next Question
               </button>
+            ) : !isGameOver &&
+              !isLoading &&
+              userAnswer.length === TOTAL_QUESTIONS ? (
+              <button onClick={handleEndGame}>End Game</button>
             ) : null}
           </div>
         </div>
@@ -242,8 +267,3 @@ const App = () => {
 };
 
 export default App;
-
-// (
-//   userAnswer.length === TOTAL_QUESTIONS ? (
-//     <button>Look table</button>
-//   ) :

@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Difficulty } from "../API/index";
 
-const server = "http://localhost:5000";
+const server = "http://localhost:8080";
 
 //get users
 export const getUsers = async () => {
