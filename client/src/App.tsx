@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import QuestionsCard from "./components/QuestionsCard";
-import TableOfResults from "./components/TableOfResults/index.";
+import TableOfResults from "./components/TableOfResults/index";
 import { handleFetchQuestions, Difficulty, QuestionExtend } from "./API/index";
-import { GlobalStyle } from "./styled";
+import { GlobalStyle, Button } from "./styled";
 import { formatTime } from "./utilities/utils";
-import { getUsers, createUser } from "./services/db";
+import { createUser, getEasy, getMedium, getHard } from "./services/db";
+import { User } from "./components/TableOfResults/index";
 
 //global variable
 const TOTAL_QUESTIONS = 10;
@@ -36,48 +37,17 @@ const App = () => {
   const [timerId, setTimerId] = useState<any>(null);
   const [username, setUsername] = useState("");
   const [errMsg, setErrMsg] = useState("");
+  const [users, setUsers] = useState<User[]>([]);
+  const [isActive, setIsActive] = useState<Difficulty>(Difficulty.EASY);
 
+  //Default table
   useEffect(() => {
-    console.log(questionNumber);
-  }, [questionNumber]);
-
-  useEffect(() => {
-    console.log(userAnswer.length);
-  }, [userAnswer.length]);
-
-  // useEffect(() => {
-  //   console.log(time);
-  // }, [time]);
-
-  // useEffect(() => {
-  //   console.log(username);
-  // }, [username]);
-
-  // useEffect(() => {
-  //   console.log(user);
-  // }, [user]);
-
-  useEffect(() => {
-    getUsers()
-      .then((res) => {
-        console.log(res.data);
+    getEasy()
+      .then((res: User[] = []) => {
+        setUsers(res);
       })
       .catch((err) => console.log(err));
   }, []);
-
-  // useEffect(() => {
-  //   const data = {
-  //     username: "Jovic",
-  //     score: 3,
-  //     time: 2,
-  //     difficulty: Difficulty.EASY,
-  //   };
-  //   createUser(data)
-  //     .then((res) => {
-  //       console.log(res);
-  //     })
-  //     .catch((err) => console.log(err));
-  // }, []);
 
   // Handle start game
   const handleStartGame = async () => {
@@ -178,6 +148,35 @@ const App = () => {
     setIsGameOver(true);
   };
 
+  const handleShowTable = (e: React.MouseEvent<HTMLButtonElement>) => {
+    switch (true) {
+      case e.currentTarget.value === "easy":
+        setIsActive(Difficulty.EASY);
+        getEasy()
+          .then((res: User[] = []) => {
+            setUsers(res);
+          })
+          .catch((err) => console.log(err));
+        break;
+      case e.currentTarget.value === "medium":
+        setIsActive(Difficulty.MEDIUM);
+        getMedium()
+          .then((res: User[] = []) => {
+            setUsers(res);
+          })
+          .catch((err) => console.log(err));
+        break;
+      case e.currentTarget.value === "hard":
+        setIsActive(Difficulty.HARD);
+        getHard()
+          .then((res: User[] = []) => {
+            setUsers(res);
+          })
+          .catch((err) => console.log(err));
+        break;
+    }
+  };
+
   return (
     <React.Fragment>
       <GlobalStyle />
@@ -209,7 +208,30 @@ const App = () => {
                   />
                 </div>
                 <p className="errMsg">{errMsg}</p>
-                <TableOfResults />
+                <div className="table-field">
+                  <Button
+                    userClicked={Difficulty.EASY === isActive}
+                    value={Difficulty.EASY}
+                    onClick={handleShowTable}
+                  >
+                    Easy
+                  </Button>
+                  <Button
+                    userClicked={Difficulty.MEDIUM === isActive}
+                    value={Difficulty.MEDIUM}
+                    onClick={handleShowTable}
+                  >
+                    Medium
+                  </Button>
+                  <Button
+                    userClicked={Difficulty.HARD === isActive}
+                    value={Difficulty.HARD}
+                    onClick={handleShowTable}
+                  >
+                    Hard
+                  </Button>
+                </div>
+                <TableOfResults users={users} />
               </>
             ) : (
               !isLoading && (
@@ -257,7 +279,9 @@ const App = () => {
             ) : !isGameOver &&
               !isLoading &&
               userAnswer.length === TOTAL_QUESTIONS ? (
-              <button onClick={handleEndGame}>End Game</button>
+              <button className="endGame-btn" onClick={handleEndGame}>
+                End Game
+              </button>
             ) : null}
           </div>
         </div>

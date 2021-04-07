@@ -12,8 +12,6 @@ export const Wrapper = styled.div`
     padding: 10px 5px;
     font-size: 1.8rem;
     color: #fff;
-    // color: #4fb0bd;
-    // background: #18183d;
     text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2), 2px 2px 2px rgba(0, 0, 0, 0.2),
       3px 3px 3px rgba(0, 0, 0, 0.2), 4px 4px 4px rgba(0, 0, 0, 0.2),
       5px 5px 5px rgba(0, 0, 0, 0.2), 6px 6px 6px rgba(0, 0, 0, 0.2),

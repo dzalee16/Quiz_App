@@ -87,7 +87,6 @@ export const GlobalStyle = createGlobalStyle`
     .start-btn {
         padding: 14px;
         width: 160px;
-        border: none;
         background: #18183d;
         color: #fff;
         font-size: 1.3rem;
@@ -99,6 +98,38 @@ export const GlobalStyle = createGlobalStyle`
             transform: scale(1.1);
             cursor: pointer;
         }
+    }
+
+    .difficulty {
+        padding: 10px;
+
+        & select {
+            padding: 8px;
+            width: 120px;
+            background: #18183d;
+            color: white;
+            outline: none;
+        }
+    }
+
+    .username {
+        padding: 5px;
+
+        & input {
+            padding: 8px 20px;
+            width: 250px;
+            background: #18183d;
+            color: white;
+            border-radius: 20px;
+            outline: none;
+            ::placeholder {
+                color: white;
+            }
+        }
+    }
+
+    .table-field {
+        margin-top: 100px;
     }
 
     .score {
@@ -124,9 +155,19 @@ export const GlobalStyle = createGlobalStyle`
         font-weight: bold;
     }
 
+    .showUsername {
+        background: rgba(24, 24, 61, 0.7);
+        padding: 2px 20px;
+        color: #4fb0bd;
+        border-radius: 10px;
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+
     .timer {
         font-size: 1.5rem;
         color: #4fb0bd;
+        background: rgba(24, 24, 61, 0.7);
     }
 
     .next-btn {
@@ -213,4 +254,45 @@ export const GlobalStyle = createGlobalStyle`
           -webkit-transform: scaleY(1);
         }
       }
+
+      .endGame-btn {
+          margin-top: 20px;
+        padding: 10px; 
+        width: 300px;
+        border: none;
+        background: #18183d;
+        color: #fff;
+        font-size: 1.3rem;
+        font-weight: 800;
+        border-radius: 30px;
+        outline: none;
+        box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2), 2px 2px 2px rgba(0, 0, 0, 0.2),
+    3px 3px 3px rgba(0, 0, 0, 0.2), 4px 4px 4px rgba(0, 0, 0, 0.2),
+    5px 5px 5px rgba(0, 0, 0, 0.2), 6px 6px 6px rgba(0, 0, 0, 0.2),
+    7px 7px 7px rgba(0, 0, 0, 0.2), 8px 8px 8px rgba(0, 0, 0, 0.2),
+    9px 9px 9px rgba(0, 0, 0, 0.2), 10px 10px 10px rgba(0, 0, 0, 0.4);
+      }
+
+      :hover {
+          cursor: pointer;
+      }
+`;
+
+type ButtonProps = {
+  userClicked: boolean;
+};
+
+export const Button = styled.button<ButtonProps>`
+  padding: 6px;
+  width: 80px;
+  margin: 0 8px;
+  color: white;
+  border-radius: 20px;
+  outline: none;
+  background: #18183d;
+  transform: ${({ userClicked }) => (userClicked ? "scale(1.2)" : "scale(1)")};
+  border: ${({ userClicked }) => (userClicked ? "1px solid white" : "none")};
+  :hover {
+    cursor: pointer;
+  }
 `;
