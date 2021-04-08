@@ -130,6 +130,10 @@ export const GlobalStyle = createGlobalStyle`
 
     .table-field {
         margin-top: 100px;
+
+        @media only screen and (max-width: 420px) {
+            margin-top: 50px;
+        }
     }
 
     .score {
@@ -271,11 +275,11 @@ export const GlobalStyle = createGlobalStyle`
     5px 5px 5px rgba(0, 0, 0, 0.2), 6px 6px 6px rgba(0, 0, 0, 0.2),
     7px 7px 7px rgba(0, 0, 0, 0.2), 8px 8px 8px rgba(0, 0, 0, 0.2),
     9px 9px 9px rgba(0, 0, 0, 0.2), 10px 10px 10px rgba(0, 0, 0, 0.4);
+    :hover {
+        cursor: pointer;
+    }
       }
 
-      :hover {
-          cursor: pointer;
-      }
 `;
 
 type ButtonProps = {

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Difficulty } from "../../API/index";
 import { formatTime } from "../../utilities/utils";
 
@@ -12,14 +12,11 @@ export type User = {
 };
 
 const TableOfResults: any = ({ users }: { users: [User] }) => {
-  useEffect(() => {
-    console.log(users);
-  }, [users]);
-
   return (
     <Table className="table">
       <thead>
         <tr>
+          <TableHead>Num</TableHead>
           <TableHead>Username</TableHead>
           <TableHead>Score</TableHead>
           <TableHead>Time</TableHead>
@@ -29,6 +26,7 @@ const TableOfResults: any = ({ users }: { users: [User] }) => {
       <tbody>
         {users.map((user, index) => (
           <tr key={index}>
+            <TableData>{index + 1}.</TableData>
             <TableData>{user.username}</TableData>
             <TableData>{user.score}</TableData>
             <TableData>{formatTime(user.time)}</TableData>

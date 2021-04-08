@@ -7,6 +7,10 @@ export const Table = styled.table`
   border: 1px solid gold;
   color: white;
   background: #18183d;
+
+  @media only screen and (max-width: 420px) {
+    width: 310px;
+  }
 `;
 
 export const TableHead = styled.th`

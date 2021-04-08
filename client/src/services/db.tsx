@@ -4,22 +4,19 @@ import { User } from "../components/TableOfResults";
 
 const server = "http://localhost:8080";
 
-// get users
-// export const getUsers = () => {
-//   return axios.get(`${server}/users`);
-// };
-
 //get easy table
 export const getEasy = async () => {
   const arr: User[] = [];
   try {
     const data = await (await axios.get(`${server}/users`)).data;
-    data.forEach((elem: User) => {
+    data.forEach((elem: User, index: number) => {
       if (elem.difficulty === "easy") {
         arr.push(elem);
+        arr.sort((a, b) => b.time - a.time);
       }
     });
-    return arr;
+    arr.sort((a, b) => b.score - a.score);
+    return arr.slice(0, 5);
   } catch (err) {
     console.log("Error has occured", err);
   }
@@ -33,9 +30,11 @@ export const getMedium = async () => {
     data.forEach((elem: User) => {
       if (elem.difficulty === "medium") {
         arr.push(elem);
+        arr.sort((a, b) => b.time - a.time);
       }
     });
-    return arr;
+    arr.sort((a, b) => b.score - a.score);
+    return arr.slice(0, 5);
   } catch (err) {
     console.log("Error has occured", err);
   }
@@ -49,9 +48,11 @@ export const getHard = async () => {
     data.forEach((elem: User) => {
       if (elem.difficulty === "hard") {
         arr.push(elem);
+        arr.sort((a, b) => b.time - a.time);
       }
     });
-    return arr;
+    arr.sort((a, b) => b.score - a.score);
+    return arr.slice(0, 5);
   } catch (err) {
     console.log("Error has occured", err);
   }

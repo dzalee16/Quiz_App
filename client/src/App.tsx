@@ -35,23 +35,41 @@ const App = () => {
   );
   const [time, setTime] = useState<Time>(Time.EASY);
   const [timerId, setTimerId] = useState<any>(null);
-  const [username, setUsername] = useState("");
+  const [username, setUsername] = useState<string>("");
   const [errMsg, setErrMsg] = useState("");
   const [users, setUsers] = useState<User[]>([]);
   const [isActive, setIsActive] = useState<Difficulty>(Difficulty.EASY);
 
   //Default table
   useEffect(() => {
-    getEasy()
-      .then((res: User[] = []) => {
-        setUsers(res);
-      })
-      .catch((err) => console.log(err));
-  }, []);
+    switch (true) {
+      case isActive === "easy":
+        getEasy()
+          .then((res: User[] = []) => {
+            setUsers(res);
+          })
+          .catch((err) => console.log(err));
+        break;
+      case isActive === "medium":
+        getMedium()
+          .then((res: User[] = []) => {
+            setUsers(res);
+          })
+          .catch((err) => console.log(err));
+        break;
+      case isActive === "hard":
+        getHard()
+          .then((res: User[] = []) => {
+            setUsers(res);
+          })
+          .catch((err) => console.log(err));
+        break;
+    }
+  }, [isActive]);
 
   // Handle start game
   const handleStartGame = async () => {
-    if (username !== "" && username !== null) {
+    if (username !== "" && username !== null && !/\s/g.test(username)) {
       try {
         setIsLoading(true);
         setIsGameOver(false);
@@ -69,7 +87,7 @@ const App = () => {
       setUserAnswer([]);
       setIsLoading(false);
     } else {
-      setErrMsg("You must enter your name");
+      setErrMsg("Enter your name whitout whitespaces!!!");
     }
   };
 
@@ -129,10 +147,11 @@ const App = () => {
     if (time <= 0 || userAnswer.length === 10) {
       clearInterval(timerId);
     }
-  }, [time, userAnswer]);
+  }, [time, userAnswer, timerId]);
 
   const handleUsername = (e: React.FocusEvent<HTMLInputElement>) => {
     setUsername(e.currentTarget.value);
+    setErrMsg("");
   };
 
   const handleEndGame = () => {
@@ -143,7 +162,19 @@ const App = () => {
       difficulty: chooseDifficulty,
     };
     createUser(data)
-      .then((res) => console.log(res))
+      .then((res) => {
+        const data = res.data;
+        if (data.difficulty === "easy") {
+          return getEasy();
+        } else if (data.difficulty === "medium") {
+          return getMedium();
+        } else if (data.difficulty === "hard") {
+          return getHard();
+        }
+      })
+      .then((res: User[] = []) => {
+        setUsers(res);
+      })
       .catch((err) => console.log(err));
     setIsGameOver(true);
   };
