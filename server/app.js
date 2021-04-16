@@ -10,7 +10,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
 
 const usersRoutes = require("./routes/users");
-const PORT = 8080;
 
 //access to the middlewares
 app.use("/users", usersRoutes);
@@ -27,6 +26,6 @@ mongoose.connect(
   }
 );
 
-app.listen(PORT, () => {
-  console.log(`Server is listen on the port ${PORT}`);
+app.listen(process.env.PORT || 8080, () => {
+  console.log("Server is listen on the port 8080");
 });
