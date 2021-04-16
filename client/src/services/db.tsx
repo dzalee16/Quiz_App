@@ -2,7 +2,7 @@ import axios from "axios";
 import { Difficulty } from "../API/index";
 import { User } from "../components/TableOfResults";
 
-const server = "https://mladen-quiz-app.herokuapp.com";
+const server = process.env.SERVER;
 
 //get easy table
 export const getEasy = async () => {
