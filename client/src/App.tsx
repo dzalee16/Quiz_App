@@ -214,7 +214,6 @@ const App = () => {
       <main className="app">
         <div className="container">
           <h1>Quiz App</h1>
-          <p>Try to answer correctly to more questions that you can! :D</p>
           <div className="quiz-content">
             {isGameOver ? (
               <button className="start-btn" onClick={handleStartGame}>
@@ -266,13 +265,14 @@ const App = () => {
               </>
             ) : (
               !isLoading && (
-                <>
-                  <div className="showUsername">Username: {username}</div>
-                  <div className="show-difficulty">
+                <div className="info">
+                  <p className="showUsername">Username: {username}</p>
+                  <p className="show-difficulty">
                     Difficulty: {chooseDifficulty.toUpperCase()}
-                  </div>
-                  <div className="timer">Time: {formatTime(time)}</div>
-                </>
+                  </p>
+                  <p className="timer">{formatTime(time)}</p>
+                  <p className="score">Score: {score}</p>
+                </div>
               )
             )}
 
@@ -285,10 +285,6 @@ const App = () => {
                 <div className="react5"></div>
               </div>
             )}
-
-            {!isLoading && !isGameOver ? (
-              <p className="score">Score: {score}</p>
-            ) : null}
 
             {!isLoading && !isGameOver && (
               <QuestionsCard

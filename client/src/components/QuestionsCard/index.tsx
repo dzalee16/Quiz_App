@@ -1,5 +1,11 @@
 import React from "react";
-import { Wrapper, ButtonWrapper, ButtonWrapperContent, Button } from "./styled";
+import {
+  Wrapper,
+  TableOfContent,
+  ButtonWrapper,
+  ButtonWrapperContent,
+  Button,
+} from "./styled";
 
 type Props = {
   question: string;
@@ -20,12 +26,12 @@ const QuestionsCard: React.FC<Props> = ({
 }) => {
   return (
     <Wrapper className="questions-card">
-      <div className="table-of-content">
+      <TableOfContent className="table-of-content">
         <h3>
           Question: {questionNumber} / {totalQuestions}
         </h3>
         <h4 dangerouslySetInnerHTML={{ __html: question }}></h4>
-      </div>
+      </TableOfContent>
       <ButtonWrapper className="questions-card-listOfitems">
         {answers.map((answer: string) => (
           <ButtonWrapperContent key={answer} className="questions-card-items">

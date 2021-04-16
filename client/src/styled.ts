@@ -1,5 +1,5 @@
 import styled, { createGlobalStyle } from "styled-components";
-import BGImage from "./assets/JS-Bg.png";
+import BGImage from "./assets/quiz.jpg";
 
 export const GlobalStyle = createGlobalStyle`
     html {
@@ -14,8 +14,8 @@ export const GlobalStyle = createGlobalStyle`
 
     body {
         position: relative;
-        background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),   url(${BGImage});
-        background-size: cover;
+        background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.2)),   url(${BGImage});
+        background-size: contain;
         background-repeat: no-repeat; 
         background-attachment: fixed;
     }
@@ -136,42 +136,40 @@ export const GlobalStyle = createGlobalStyle`
         }
     }
 
-    .score {
-        font-size: 3rem;
-        color: #4fb0bd;
-        font-weight: 900;
-        text-align: center;
-        border-radius: 10px;
-        background: rgba(24, 24, 61, 0.7);
-        padding: 2px 20px;
+    .info {
+        width: 320px;
+        border-radius: 30px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background: rgba(24, 24, 61, 0.8);
+        padding: 10px;
+        
+        p {
+            color: #9cc706;
+            padding: 2px 20px;
+            font-weight: bold;
+        }
+
+        @media only screen and (max-width: 430px) {
+            font-size: 1rem;
+          }
+    }
+
+    .timer {
+        font-size: 4rem;
 
         @media only screen and (max-width: 430px) {
             font-size: 2rem;
           }
     }
 
-    .show-difficulty {
-        background: rgba(24, 24, 61, 0.7);
-        padding: 2px 20px;
-        color: #4fb0bd;
-        border-radius: 10px;
-        font-size: 1.5rem;
-        font-weight: bold;
-    }
+    .score {
+        font-size: 2.5rem;
 
-    .showUsername {
-        background: rgba(24, 24, 61, 0.7);
-        padding: 2px 20px;
-        color: #4fb0bd;
-        border-radius: 10px;
-        font-size: 1.5rem;
-        font-weight: bold;
-    }
-
-    .timer {
-        font-size: 1.5rem;
-        color: #4fb0bd;
-        background: rgba(24, 24, 61, 0.7);
+        @media only screen and (max-width: 430px) {
+            font-size: 1.5rem;
+          }
     }
 
     .next-btn {

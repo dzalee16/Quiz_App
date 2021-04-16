@@ -10,24 +10,28 @@ export const Wrapper = styled.div`
   h3,
   h4 {
     padding: 10px 5px;
-    font-size: 1.8rem;
-    color: #fff;
-    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2), 2px 2px 2px rgba(0, 0, 0, 0.2),
-      3px 3px 3px rgba(0, 0, 0, 0.2), 4px 4px 4px rgba(0, 0, 0, 0.2),
-      5px 5px 5px rgba(0, 0, 0, 0.2), 6px 6px 6px rgba(0, 0, 0, 0.2),
-      7px 7px 7px rgba(0, 0, 0, 0.2), 8px 8px 8px rgba(0, 0, 0, 0.2),
-      9px 9px 9px rgba(0, 0, 0, 0.2), 10px 10px 10px rgba(0, 0, 0, 0.4);
   }
 
   @media only screen and (max-width: 580px) {
     width: 100%;
     align-items: center;
+  }
+`;
 
-    h3,
-    h4 {
-      font-size: 1.3rem;
-      text-align: center;
-    }
+export const TableOfContent = styled.div`
+  margin-top: 8px;
+  background: rgba(24, 24, 61, 0.8);
+  text-align: center;
+  font-size: 1.8rem;
+  color: #9cc706;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2), 2px 2px 2px rgba(0, 0, 0, 0.2),
+    3px 3px 3px rgba(0, 0, 0, 0.2), 4px 4px 4px rgba(0, 0, 0, 0.2),
+    5px 5px 5px rgba(0, 0, 0, 0.2), 6px 6px 6px rgba(0, 0, 0, 0.2),
+    7px 7px 7px rgba(0, 0, 0, 0.2), 8px 8px 8px rgba(0, 0, 0, 0.2),
+    9px 9px 9px rgba(0, 0, 0, 0.2), 10px 10px 10px rgba(0, 0, 0, 0.4);
+
+  @media only screen and (max-width: 580px) {
+    font-size: 1.3rem;
   }
 `;
 
