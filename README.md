@@ -21,4 +21,4 @@ https://m-quiz-app.netlify.app/
 
 ## Deploy
 
-- Netlify and Heroku
+- Netlify (client) and Heroku (server)
