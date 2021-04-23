@@ -3,6 +3,8 @@ import { Difficulty } from "../API/index";
 import { User } from "../components/TableOfResults";
 
 const server = "https://mladen-quiz-app.herokuapp.com";
+//Development mode -> http://localhost:8080
+//Production mode -> https://mladen-quiz-app.herokuapp.com
 
 //get easy table
 export const getEasy = async () => {

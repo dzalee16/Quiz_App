@@ -137,7 +137,7 @@ const App = () => {
   };
 
   const setTimer = () => {
-    const newTimerId: any = setInterval(() => {
+    let newTimerId: any = setInterval(() => {
       setTime((prev) => prev - 1);
     }, 1000);
     setTimerId(newTimerId);
@@ -146,8 +146,9 @@ const App = () => {
   useEffect(() => {
     if (time <= 0 || userAnswer.length === 10) {
       clearInterval(timerId);
+      setTimerId(null);
     }
-  }, [time, userAnswer, timerId]);
+  }, [time, userAnswer]);
 
   const handleUsername = (e: React.FocusEvent<HTMLInputElement>) => {
     setUsername(e.currentTarget.value);
@@ -165,10 +166,13 @@ const App = () => {
       .then((res) => {
         const data = res.data;
         if (data.difficulty === "easy") {
+          setTime(Time.EASY);
           return getEasy();
         } else if (data.difficulty === "medium") {
+          setTime(Time.MEDIUM);
           return getMedium();
         } else if (data.difficulty === "hard") {
+          setTime(Time.HARD);
           return getHard();
         }
       })
@@ -177,6 +181,7 @@ const App = () => {
       })
       .catch((err) => console.log(err));
     setIsGameOver(true);
+    setIsActive(chooseDifficulty);
   };
 
   const handleShowTable = (e: React.MouseEvent<HTMLButtonElement>) => {
